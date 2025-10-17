@@ -27,6 +27,7 @@
   copy:
     src: /bin/speedtest.5
     dest: /usr/share/man/man5/
+    remote_src: true
 
 - name: "Cleanup left-over files from Speedtest CLI install package"
   file:
