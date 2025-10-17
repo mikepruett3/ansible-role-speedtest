@@ -1,21 +1,25 @@
 ---
 # tasks file for ansible-role-speedtest
 
+- name: "Set Speedtest CLI install package facts"
+  set_fact:
+    package: "ookla-speedtest-{{ version }}-linux-{{ ansible_facts['architecture'] }}.tgz"
+
 - name: "Download Speedtest CLI install package locally"
   get_url:
-    url: "https://install.speedtest.net/app/cli/ookla-speedtest-{{ version }}-linux-{{ ansible_facts['architecture'] }}.tgz"
-    dest: "/tmp/ookla-speedtest-{{ version }}-linux-{{ ansible_facts['architecture'] }}.tgz"
+    url: "https://install.speedtest.net/app/cli/{{ package }}"
+    dest: "/tmp/{{ package }}"
     mode: '0644'
   delegate_to: 127.0.0.1
 
 - name: "Copy the Speedtest CLI install package to {{ inventory_hostname }}"
   copy:
-    src: "/tmp/ookla-speedtest-{{ version }}-linux-{{ ansible_facts['architecture'] }}.tgz"
+    src: "/tmp/{{ package }}"
     dest: /root/
     mode: '0644'
 
 - name: "Extract the Speedtest CLI install package"
-  shell: tar -xzf /tmp/ookla-speedtest-{{ version }}-linux-{{ ansible_facts['architecture'] }}.tgz --directory /bin --strip-components 1
+  shell: tar -xzf /root/{{ package }} --directory /bin --strip-components 1
   args:
     warn: false
 
@@ -31,4 +35,4 @@
   loop:
     - /bin/speedtest.5
     - /bin/speedtest.md
-    - "/tmp/ookla-speedtest-{{ version }}-linux-{{ ansible_facts['architecture'] }}.tgz"
+    - "/root/{{ package }}"
