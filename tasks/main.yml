@@ -1,2 +1,9 @@
 ---
 # tasks file for ansible-role-speedtest
+
+- name: "Download Speedtest CLI install package"
+  get_url:
+    url: "https://install.speedtest.net/app/cli/ookla-speedtest-{{ version }}-linux-{{ ansible_facts['architecture'] }}.tgz"
+    dest: "/tmp/ookla-speedtest-{{ version }}-linux-{{ ansible_facts['architecture'] }}.tgz"
+    mode: '0644'
+  delegate_to: 127.0.0.1
