@@ -19,7 +19,7 @@
     mode: '0644'
 
 - name: "Extract the Speedtest CLI install package"
-  shell: tar -xzf /root/{{ package }} --directory /bin --strip-components 1
+  shell: tar -xzf /root/{{ package }} --directory /bin
   args:
     warn: false
 
