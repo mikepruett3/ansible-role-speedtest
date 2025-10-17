@@ -31,7 +31,7 @@
 
 - name: "Cleanup left-over files from Speedtest CLI install package"
   file:
-    src: "{{ item }}"
+    path: "{{ item }}"
     state: absent
   loop:
     - /bin/speedtest.5
