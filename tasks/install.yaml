@@ -5,10 +5,23 @@
   set_fact:
     package: "ookla-speedtest-{{ version }}-linux-{{ ansible_facts['architecture'] }}.tgz"
 
+- name: "Install the EPEL Repository (yum)"
+  yum:
+    name: "epel-release"
+    state: present
+  when:
+    - ansible_facts['pkg_mgr'] == 'yum'
+
+- name: "Install the EPEL Repository (dnf)"
+  dnf:
+    name: "epel-release"
+    state: present
+  when:
+    - ansible_facts['pkg_mgr'] == 'dnf'
+
 - name: "Install required packages (yum)"
   yum:
     name:
-      - epel-release
       - tar
       - jq
     state: present
@@ -18,7 +31,6 @@
 - name: "Install required packages (dnf)"
   dnf:
     name:
-      - epel-release
       - tar
       - jq
     state: present
