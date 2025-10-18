@@ -12,3 +12,9 @@
 
 - name: "Include tasks from speedtest playbook"
   include_tasks: speedtest.yaml
+
+- name: "Show Speedtest results"
+  debug:
+    msg:
+      - "Download: {{ download_bandwidth_mbps }} Mbps"
+      - "Upload: {{ upload_bandwidth_mbps }} Mbps"
