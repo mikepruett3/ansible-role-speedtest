@@ -13,13 +13,14 @@
     grep -i '{{ ansible_facts["system"] }}' |
     grep -i '{{ ansible_facts["architecture"] }}' |
     sort -u
+  delegate_to: 127.0.0.1
   register: output
+  failed_when: output.stdout_lines > 1
 
 - name: "Set Speedtest CLI install package facts"
   set_fact:
     url: "{{ output.stdout }}"
     package: "{{ output.stdout.split('/') | last }}"
-    #package: "ookla-speedtest-{{ version }}-linux-{{ ansible_facts['architecture'] }}.tgz"
 
 - name: "Collect stats of Speedtest CLI executable"
   stat:
