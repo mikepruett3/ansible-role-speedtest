@@ -1,10 +1,6 @@
 ---
 # Lookup tasks file for ansible-role-speedtest
 
-- name: "Set fact for Speedtest CLI download page URL"
-  set_fact:
-    base_url: "https://www.speedtest.net/apps/cli"
-
 - name: "Collect hyperlinks from the Speedtest CLI download page"
   shell: |
     curl -s {{ base_url }} |
@@ -13,6 +9,8 @@
     grep -i '{{ ansible_facts["system"] }}' |
     grep -i '{{ ansible_facts["architecture"] }}' |
     sort -u
+  args:
+    warn: false
   delegate_to: 127.0.0.1
   register: output
   failed_when: output.stdout_lines | length > 1
