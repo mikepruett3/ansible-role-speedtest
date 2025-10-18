@@ -12,7 +12,7 @@
     grep -i 'ookla-speedtest' |
     grep -i '{{ ansible_facts["system"] }}' |
     grep -i '{{ ansible_facts["architecture"] }}' |
-    sort -u |
+    sort -u
   register: output
 
 - name: "Set Speedtest CLI install package facts"
