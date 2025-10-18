@@ -2,7 +2,7 @@
 # Speedtest tasks file for ansible-role-speedtest
 
 - name: "Perform a speedtest"
-  shell: speedtest --accept-license --format=json-pretty
+  shell: speedtest --accept-license --accept-gdpr --format=json-pretty
   register: output
   no_log: false
 
