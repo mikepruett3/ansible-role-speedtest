@@ -14,6 +14,6 @@
     download_mbps: "{{ (results.download.bandwidth * 8 / 1000000) | round(2) }}"
     upload_mbps: "{{ (results.upload.bandwidth * 8 / 1000000) | round(2) }}"
     isp: "{{ results.isp }}"
-    external_ip: "{{ results.externalIp }}"
+    external_ip: "{{ results.interface.externalIp }}"
   when:
     - output.stdout != ''
