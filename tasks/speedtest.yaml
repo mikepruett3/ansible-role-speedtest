@@ -1,10 +1,10 @@
 ---
 # Speedtest tasks file for ansible-role-speedtest
 
-- name: "Collect stats of Speedtest CLI executable"
+- name: "Perform a speedtest"
   shell: echo "yes" | speedtest --format=json-pretty
   register: output
-  no_log: true
+  no_log: false
 
 - name: "Parse JSON from the stdout of output"
   set_fact:
