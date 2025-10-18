@@ -14,8 +14,8 @@
     grep -i '{{ ansible_facts["architecture"] }}' |
     sort -u
   delegate_to: 127.0.0.1
+  failed_when: stdout_lines | length > 1
   register: output
-  failed_when: output.stdout_lines > 1
 
 - name: "Set Speedtest CLI install package facts"
   set_fact:
