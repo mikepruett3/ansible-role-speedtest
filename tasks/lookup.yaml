@@ -7,7 +7,7 @@
 
 - name: "Collect hyperlinks from the Speedtest CLI download page"
   shell: |
-    curl -s "{{ base_url }}" |
+    curl -s '{{ base_url }}' |
     grep -Eo 'https?://[^"]+' |
     grep -i 'ookla-speedtest' |
     grep -i '{{ ansible_facts["system"] }}' |
