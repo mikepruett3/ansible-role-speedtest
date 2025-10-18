@@ -23,7 +23,7 @@
   yum:
     name:
       - tar
-      - jq
+      #- jq
     state: present
   when:
     - ansible_facts['pkg_mgr'] == 'yum'
@@ -32,7 +32,7 @@
   dnf:
     name:
       - tar
-      - jq
+      #- jq
     state: present
   when:
     - ansible_facts['pkg_mgr'] == 'dnf'

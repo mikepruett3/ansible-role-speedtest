@@ -3,7 +3,6 @@
 
 - name: "Collect stats of Speedtest CLI executable"
   shell: speedtest --format=json-pretty
-  #failed_when: false
   register: output
 
 - name: "Parse JSON from the stdout of output"
@@ -12,7 +11,7 @@
 
 - name: "Set Bandwidth facts"
   set_fact:
-    download: "{{ (results.download.bandwidth * 8 / 1000000) | round(2) }}"
-    upload: "{{ (results.upload.bandwidth * 8 / 1000000) | round(2) }}"
+    download_mbps: "{{ (results.download.bandwidth * 8 / 1000000) | round(2) }}"
+    upload_mbps: "{{ (results.upload.bandwidth * 8 / 1000000) | round(2) }}"
   when:
     - output.stdout != ''
