@@ -1,10 +1,6 @@
 ---
 # tasks file for ansible-role-speedtest
 
-- name: "Set Speedtest CLI install package facts"
-  set_fact:
-    package: "ookla-speedtest-{{ version }}-linux-{{ ansible_facts['architecture'] }}.tgz"
-
 - name: "Install the EPEL Repository (yum)"
   yum:
     name: "epel-release"

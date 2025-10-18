@@ -1,9 +1,24 @@
 ---
 # Lookup tasks file for ansible-role-speedtest
 
+- name: "Set fact for Speedtest CLI download page URL"
+  set_fact:
+    base_url: "https://www.speedtest.net/apps/cli"
+
+- name: "Collect hyperlinks from the Speedtest CLI download page"
+  shell: |
+    curl -s "{{ base_url }}" |
+    grep -Eo 'https?://[^"]+' |
+    grep -i 'ookla-speedtest' |
+    grep -i '{{ ansible_facts["system"] }}' |
+    grep -i '{{ ansible_facts["architecture"] }}' |
+    sort -u |
+  register: output
+
 - name: "Set Speedtest CLI install package facts"
   set_fact:
-    package: "ookla-speedtest-{{ version }}-linux-{{ ansible_facts['architecture'] }}.tgz"
+    url: "{{ output.stdout | split('/')[4] }}"
+    #package: "ookla-speedtest-{{ version }}-linux-{{ ansible_facts['architecture'] }}.tgz"
 
 - name: "Collect stats of Speedtest CLI executable"
   stat:
