@@ -9,3 +9,6 @@
   when:
     - install is defined
     - install | bool
+
+- name: "Include tasks from speedtest playbook"
+  include_tasks: speedtest.yaml

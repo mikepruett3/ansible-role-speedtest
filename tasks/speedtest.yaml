@@ -1,0 +1,17 @@
+---
+# Speedtest tasks file for ansible-role-speedtest
+
+- name: "Collect stats of Speedtest CLI executable"
+  shell: speedtest --format=json-pretty
+  #failed_when: false
+  register: output
+
+- name: "Parse JSON from the stdout of output"
+  set_fact:
+    results: "{{ output.stdout | from_json }}"
+
+- name: "Set Bandwidth facts"
+  set_fact:
+    download: "{{ results.download.bandwidth }}"
+  when:
+    - output.stdout != ''
