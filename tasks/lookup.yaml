@@ -17,8 +17,8 @@
 
 - name: "Set Speedtest CLI install package facts"
   set_fact:
+    url: "{{ output.stdout }}"
     package: "{{ output.stdout.split('/') | last }}"
-    url: "{{ output.stdout.split('{{ package }}') | last }}"
     #package: "ookla-speedtest-{{ version }}-linux-{{ ansible_facts['architecture'] }}.tgz"
 
 - name: "Collect stats of Speedtest CLI executable"

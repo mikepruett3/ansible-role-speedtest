@@ -35,7 +35,7 @@
 
 - name: "Download Speedtest CLI install package locally"
   get_url:
-    url: "https://install.speedtest.net/app/cli/{{ package }}"
+    url: "{{ url }}"
     dest: "/tmp/{{ package }}"
     mode: '0644'
   delegate_to: 127.0.0.1
