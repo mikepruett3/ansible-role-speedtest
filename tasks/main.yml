@@ -16,7 +16,7 @@
 - name: "Show Speedtest results"
   debug:
     msg:
+      - "Internet Service Provider: {{ isp }}"
+      - "External IP Address: {{ external_ip }}"
       - "Download: {{ download_mbps }} Mbps"
       - "Upload: {{ upload_mbps }} Mbps"
-      - "ISP: {{ isp }}"
-      - "External IP Address: {{ external_ip }}"
