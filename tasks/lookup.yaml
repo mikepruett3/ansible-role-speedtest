@@ -1,0 +1,19 @@
+---
+# Lookup tasks file for ansible-role-speedtest
+
+- name: "Set Speedtest CLI install package facts"
+  set_fact:
+    package: "ookla-speedtest-{{ version }}-linux-{{ ansible_facts['architecture'] }}.tgz"
+
+- name: "Collect stats of Speedtest CLI executable"
+  stat:
+    path: /bin/speedtest
+  failed_when: false
+  register: output
+
+- name: "Set Install fact"
+  set_fact:
+    install: true
+  when:
+    - not output.stat.exists
+    - not output.stat.executable

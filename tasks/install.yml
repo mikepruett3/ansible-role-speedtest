@@ -1,0 +1,57 @@
+---
+# tasks file for ansible-role-speedtest
+
+- name: "Set Speedtest CLI install package facts"
+  set_fact:
+    package: "ookla-speedtest-{{ version }}-linux-{{ ansible_facts['architecture'] }}.tgz"
+
+- name: "Install required packages (yum)"
+  yum:
+    name:
+      - tar
+      - jq
+    state: present
+  when:
+    - ansible_facts['pkg_mgr'] == 'yum'
+
+- name: "Install required packages (dnf)"
+  dnf:
+    name:
+      - tar
+      - jq
+    state: present
+  when:
+    - ansible_facts['pkg_mgr'] == 'dnf'
+
+- name: "Download Speedtest CLI install package locally"
+  get_url:
+    url: "https://install.speedtest.net/app/cli/{{ package }}"
+    dest: "/tmp/{{ package }}"
+    mode: '0644'
+  delegate_to: 127.0.0.1
+
+- name: "Copy the Speedtest CLI install package to {{ inventory_hostname }}"
+  copy:
+    src: "/tmp/{{ package }}"
+    dest: /root/
+    mode: '0644'
+
+- name: "Extract the Speedtest CLI install package"
+  shell: tar -xzf /root/{{ package }} --directory /bin
+  args:
+    warn: false
+
+- name: "Copy Speedtest CLI man page to correct location"
+  copy:
+    src: /bin/speedtest.5
+    dest: /usr/share/man/man5/
+    remote_src: true
+
+- name: "Cleanup left-over files from Speedtest CLI install package"
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /bin/speedtest.5
+    - /bin/speedtest.md
+    - "/root/{{ package }}"
