@@ -4,10 +4,12 @@
 - name: "Collect stats of Speedtest CLI executable"
   shell: speedtest --format=json-pretty
   register: output
+  no_log: true
 
 - name: "Parse JSON from the stdout of output"
   set_fact:
     results: "{{ output.stdout | from_json }}"
+  no_log: true
 
 - name: "Set Bandwidth facts"
   set_fact:
