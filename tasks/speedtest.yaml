@@ -12,7 +12,7 @@
 
 - name: "Set Bandwidth facts"
   set_fact:
-    download: "{{ results.download.bandwidth * 8 / 1000000) | round(2) }}"
-    upload: "{{ results.upload.bandwidth * 8 / 1000000) | round(2) }}"
+    download: "{{ (results.download.bandwidth * 8 / 1000000) | round(2) }}"
+    upload: "{{ (results.upload.bandwidth * 8 / 1000000) | round(2) }}"
   when:
     - output.stdout != ''
